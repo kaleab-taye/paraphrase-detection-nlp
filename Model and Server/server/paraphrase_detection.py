@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-import pd
+import detector
 
 app = FastAPI()
 
@@ -22,5 +22,5 @@ class Sentences(BaseModel):
 @app.post("/checkparaphrase")
 async def checkparaphrase(sentences: Sentences):
     paraphrase_result = f"{sentences.sentence1} {sentences.sentence2}"
-    similarity = pd.getSimilarity(sentences.sentence1, sentences.sentence2)
+    similarity = detector.getSimilarity(sentences.sentence1, sentences.sentence2)
     return {"parphrase_probability": similarity[0], "paraphrase_result": similarity[1]}
